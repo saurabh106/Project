@@ -1,0 +1,458 @@
+[
+  {
+    "timestamp": "2025-11-04T20:21:16.308431",
+    "level": "info",
+    "message": "\ud83d\ude80 Universal Media Downloader API Starting...",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:16.312404",
+    "level": "info",
+    "message": "\ud83d\udcc1 Default download folder: S:\\Projects_2\\playlist\\backend\\temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:16.314460",
+    "level": "info",
+    "message": "\ud83c\udf10 Supported domains: youtube.com, youtu.be, spotify.com, soundcloud.com, vimeo.com...",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:16.609735",
+    "level": "info",
+    "message": "\u2705 yt-dlp imported successfully",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:17.091481",
+    "level": "info",
+    "message": "\ud83c\udfaf yt-dlp version: 2025.09.26",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:17.164623",
+    "level": "info",
+    "message": "\u2705 FFmpeg available: ffmpeg version 8.0-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:17.166615",
+    "level": "info",
+    "message": "\u2705 FFmpeg is available - full functionality enabled",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:17.238388",
+    "level": "info",
+    "message": "\u2705 FFmpeg available: ffmpeg version 8.0-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:20.331715",
+    "level": "info",
+    "message": "\ud83d\udcca Info request for: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:20.339747",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:20.344235",
+    "level": "info",
+    "message": "\ud83d\udd0d Analyzing URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:20.348740",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:24.494105",
+    "level": "info",
+    "message": "\u2705 Successfully analyzed: Ed Sheeran - Perfect (Official Music Video)",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:24.500243",
+    "level": "info",
+    "message": "\u2705 Info retrieval successful: Ed Sheeran - Perfect (Official Music Video)",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:26.926020",
+    "level": "info",
+    "message": "\ud83d\udce5 Download file request - URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE, Format: best, Path: None",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:26.929776",
+    "level": "info",
+    "message": "\ud83d\udd0d Analyzing URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:26.935955",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:31.347786",
+    "level": "info",
+    "message": "\u2705 Successfully analyzed: Ed Sheeran - Perfect (Official Music Video)",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:31.353306",
+    "level": "info",
+    "message": "\u2b07\ufe0f Starting download: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE to None",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:31.357602",
+    "level": "info",
+    "message": "\ud83d\ude80 Starting download - URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE, Format: best, Path: None",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:31.362287",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:31.368271",
+    "level": "info",
+    "message": "\ud83c\udf10 Platform detected: youtube",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:31.373344",
+    "level": "info",
+    "message": "\ud83d\udcc1 Downloading to: temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:31.437042",
+    "level": "info",
+    "message": "\u2705 FFmpeg available: ffmpeg version 8.0-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:32.371139",
+    "level": "debug",
+    "message": "\ud83d\udd0d Getting video information...",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:34.016163",
+    "level": "info",
+    "message": "\u2705 Video available: 'Ed Sheeran - Perfect (Official Music Video)' by Ed Sheeran (282s)",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:34.020042",
+    "level": "debug",
+    "message": "\ud83d\udcca Video details: {\"id\": \"2Vv-BfVoq4g\", \"view_count\": 4053340524, \"categories\": [\"Music\"], \"like_count\": 23125517}",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:34.024462",
+    "level": "info",
+    "message": "\u2b07\ufe0f Starting download process...",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:43.602835",
+    "level": "debug",
+    "message": "\ud83d\udce5 Download completed, filename: temp_downloads\\Ed_Sheeran_-_Perfect_Official_Music_Video.mp4",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:43.608071",
+    "level": "debug",
+    "message": "\ud83d\udd0d Finding best file for: temp_downloads\\Ed_Sheeran_-_Perfect_Official_Music_Video.mp4 in temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:43.613289",
+    "level": "debug",
+    "message": "\ud83d\udcc1 Found 1 matching files in temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:43.618584",
+    "level": "debug",
+    "message": "\u2705 Single file found: Ed_Sheeran_-_Perfect_Official_Music_Video.mp4",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:43.623487",
+    "level": "info",
+    "message": "\u2705 Final file: Ed_Sheeran_-_Perfect_Official_Music_Video.mp4 in temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:43.628593",
+    "level": "info",
+    "message": "\u2705 Download completed successfully: temp_downloads\\Ed_Sheeran_-_Perfect_Official_Music_Video.mp4 (10656253 bytes)",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:21:43.634850",
+    "level": "info",
+    "message": "\u2705 Download successful: Ed_Sheeran_-_Perfect_Official_Music_Video.mp4 in temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:24.896127",
+    "level": "info",
+    "message": "\ud83d\udce5 Download file request - URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE, Format: best, Path: None",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:24.902493",
+    "level": "info",
+    "message": "\ud83d\udd0d Analyzing URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:24.909373",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:30.208856",
+    "level": "info",
+    "message": "\u2705 Successfully analyzed: Ed Sheeran - Perfect (Official Music Video)",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:30.214787",
+    "level": "info",
+    "message": "\u2b07\ufe0f Starting download: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE to None",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:30.219219",
+    "level": "info",
+    "message": "\ud83d\ude80 Starting download - URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE, Format: best, Path: None",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:30.223558",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://youtu.be/2Vv-BfVoq4g?si=sRQIcVSR6U5F3kDE",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:30.229487",
+    "level": "info",
+    "message": "\ud83c\udf10 Platform detected: youtube",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:30.234950",
+    "level": "info",
+    "message": "\ud83d\udcc1 Downloading to: temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:30.344857",
+    "level": "info",
+    "message": "\u2705 FFmpeg available: ffmpeg version 8.0-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:30.410747",
+    "level": "debug",
+    "message": "\ud83d\udd0d Getting video information...",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:32.673830",
+    "level": "info",
+    "message": "\u2705 Video available: 'Ed Sheeran - Perfect (Official Music Video)' by Ed Sheeran (282s)",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:32.678950",
+    "level": "debug",
+    "message": "\ud83d\udcca Video details: {\"id\": \"2Vv-BfVoq4g\", \"view_count\": 4053342496, \"categories\": [\"Music\"], \"like_count\": 23125524}",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:32.683441",
+    "level": "info",
+    "message": "\u2b07\ufe0f Starting download process...",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:34.220016",
+    "level": "debug",
+    "message": "\ud83d\udce5 Download completed, filename: temp_downloads\\Ed_Sheeran_-_Perfect_Official_Music_Video.mp4",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:34.228621",
+    "level": "debug",
+    "message": "\ud83d\udd0d Finding best file for: temp_downloads\\Ed_Sheeran_-_Perfect_Official_Music_Video.mp4 in temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:34.239533",
+    "level": "debug",
+    "message": "\ud83d\udcc1 Found 1 matching files in temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:34.251036",
+    "level": "debug",
+    "message": "\u2705 Single file found: Ed_Sheeran_-_Perfect_Official_Music_Video.mp4",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:34.260806",
+    "level": "info",
+    "message": "\u2705 Final file: Ed_Sheeran_-_Perfect_Official_Music_Video.mp4 in temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:34.270045",
+    "level": "info",
+    "message": "\u2705 Download completed successfully: temp_downloads\\Ed_Sheeran_-_Perfect_Official_Music_Video.mp4 (10656253 bytes)",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:24:34.279472",
+    "level": "info",
+    "message": "\u2705 Download successful: Ed_Sheeran_-_Perfect_Official_Music_Video.mp4 in temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:34.719306",
+    "level": "info",
+    "message": "\ud83d\udcca Info request for: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:34.723550",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:34.727982",
+    "level": "info",
+    "message": "\ud83d\udd0d Analyzing URL: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:34.733387",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:34.839779",
+    "level": "error",
+    "message": "\u274c Analysis failed: ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:40.454973",
+    "level": "info",
+    "message": "\ud83d\udcca Info request for: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:40.459508",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:40.463670",
+    "level": "info",
+    "message": "\ud83d\udd0d Analyzing URL: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:40.469232",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:40.511556",
+    "level": "error",
+    "message": "\u274c Analysis failed: ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:42.400892",
+    "level": "info",
+    "message": "\ud83d\udcca Info request for: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:42.406170",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:42.411316",
+    "level": "info",
+    "message": "\ud83d\udd0d Analyzing URL: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:42.417176",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:42.470991",
+    "level": "error",
+    "message": "\u274c Analysis failed: ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:43.975503",
+    "level": "info",
+    "message": "\ud83d\udcca Info request for: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:43.979560",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:43.983494",
+    "level": "info",
+    "message": "\ud83d\udd0d Analyzing URL: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:43.990668",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://open.spotify.com/album/1RNEvKlb3YovuiE8Gw5VOO?si=VwYROtYlSTahkUkY0upoyQ",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-04T20:27:44.034165",
+    "level": "error",
+    "message": "\u274c Analysis failed: ",
+    "details": {}
+  }
+]
