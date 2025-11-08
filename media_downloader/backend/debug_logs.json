@@ -1,0 +1,224 @@
+[
+  {
+    "timestamp": "2025-11-08T13:06:30.327568",
+    "level": "info",
+    "message": "\ud83d\ude80 Universal Media Downloader API Starting...",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:06:30.335067",
+    "level": "info",
+    "message": "\ud83d\udcc1 Default download folder: S:\\Project\\media_downloader\\backend\\temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:06:30.337043",
+    "level": "info",
+    "message": "\ud83c\udf10 Supported domains: youtube.com, youtu.be, spotify.com, soundcloud.com, vimeo.com...",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:06:30.781751",
+    "level": "info",
+    "message": "\u2705 yt-dlp imported successfully",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:06:31.514778",
+    "level": "info",
+    "message": "\ud83c\udfaf yt-dlp version: 2025.09.26",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:06:31.618278",
+    "level": "info",
+    "message": "\u2705 FFmpeg available: ffmpeg version 8.0-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:06:31.620842",
+    "level": "info",
+    "message": "\u2705 FFmpeg is available - full functionality enabled",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:06:31.709463",
+    "level": "info",
+    "message": "\u2705 FFmpeg available: ffmpeg version 8.0-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:06:44.614186",
+    "level": "info",
+    "message": "\u2705 FFmpeg available: ffmpeg version 8.0-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:02.636070",
+    "level": "info",
+    "message": "\ud83d\udcca Info request for: https://youtu.be/qRdplLSWed4?si=HLinBsyOKRym4rSH",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:02.641527",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://youtu.be/qRdplLSWed4?si=HLinBsyOKRym4rSH",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:02.649537",
+    "level": "info",
+    "message": "\ud83d\udd0d Analyzing URL: https://youtu.be/qRdplLSWed4?si=HLinBsyOKRym4rSH",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:02.654933",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://youtu.be/qRdplLSWed4?si=HLinBsyOKRym4rSH",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:18.856800",
+    "level": "info",
+    "message": "\u2705 Successfully analyzed: SNAX vs JOKER 2V2 CHALLENGE\ud83d\ude21 After This...\ud83d\ude31",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:18.869372",
+    "level": "info",
+    "message": "\u2705 Info retrieval successful: SNAX vs JOKER 2V2 CHALLENGE\ud83d\ude21 After This...\ud83d\ude31",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:25.127678",
+    "level": "info",
+    "message": "\ud83d\udce5 Download file request - URL: https://youtu.be/qRdplLSWed4?si=HLinBsyOKRym4rSH, Format: best, Path: None",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:25.133039",
+    "level": "info",
+    "message": "\ud83d\udd0d Analyzing URL: https://youtu.be/qRdplLSWed4?si=HLinBsyOKRym4rSH",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:25.137726",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://youtu.be/qRdplLSWed4?si=HLinBsyOKRym4rSH",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:29.536134",
+    "level": "info",
+    "message": "\u2705 Successfully analyzed: SNAX vs JOKER 2V2 CHALLENGE\ud83d\ude21 After This...\ud83d\ude31",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:29.545397",
+    "level": "info",
+    "message": "\u2b07\ufe0f Starting download: https://youtu.be/qRdplLSWed4?si=HLinBsyOKRym4rSH to None",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:29.595463",
+    "level": "info",
+    "message": "\ud83d\ude80 Starting download - URL: https://youtu.be/qRdplLSWed4?si=HLinBsyOKRym4rSH, Format: best, Path: None",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:29.600648",
+    "level": "debug",
+    "message": "\ud83d\udd0d Validating URL: https://youtu.be/qRdplLSWed4?si=HLinBsyOKRym4rSH",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:29.608894",
+    "level": "info",
+    "message": "\ud83c\udf10 Platform detected: youtube",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:29.614804",
+    "level": "info",
+    "message": "\ud83d\udcc1 Downloading to: temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:29.722483",
+    "level": "info",
+    "message": "\u2705 FFmpeg available: ffmpeg version 8.0-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:31.045479",
+    "level": "debug",
+    "message": "\ud83d\udd0d Getting video information...",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:32.975996",
+    "level": "info",
+    "message": "\u2705 Video available: 'SNAX vs JOKER 2V2 CHALLENGE\ud83d\ude21 After This...\ud83d\ude31' by Snax Shorts (607s)",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:32.981811",
+    "level": "debug",
+    "message": "\ud83d\udcca Video details: {\"id\": \"qRdplLSWed4\", \"view_count\": 28885, \"categories\": [\"Gaming\"], \"like_count\": 4687}",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:07:32.987520",
+    "level": "info",
+    "message": "\u2b07\ufe0f Starting download process...",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:08:00.752190",
+    "level": "debug",
+    "message": "\ud83d\udce5 Download completed, filename: temp_downloads\\SNAX_vs_JOKER_2V2_CHALLENGE_After_This....mp4",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:08:00.757935",
+    "level": "debug",
+    "message": "\ud83d\udd0d Finding best file for: temp_downloads\\SNAX_vs_JOKER_2V2_CHALLENGE_After_This....mp4 in temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:08:00.764460",
+    "level": "debug",
+    "message": "\ud83d\udcc1 Found 1 matching files in temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:08:00.769070",
+    "level": "debug",
+    "message": "\u2705 Single file found: SNAX_vs_JOKER_2V2_CHALLENGE_After_This....mp4",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:08:00.774029",
+    "level": "info",
+    "message": "\u2705 Final file: SNAX_vs_JOKER_2V2_CHALLENGE_After_This....mp4 in temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:08:00.779087",
+    "level": "info",
+    "message": "\u2705 Download completed successfully: temp_downloads\\SNAX_vs_JOKER_2V2_CHALLENGE_After_This....mp4 (55109325 bytes)",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:08:00.785262",
+    "level": "info",
+    "message": "\u2705 Download successful: SNAX_vs_JOKER_2V2_CHALLENGE_After_This....mp4 in temp_downloads",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-11-08T13:19:28.336568",
+    "level": "info",
+    "message": "\u2705 FFmpeg available: ffmpeg version 8.0-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+    "details": {}
+  }
+]

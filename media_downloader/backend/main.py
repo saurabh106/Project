@@ -1,9 +1,9 @@
-from fastapi import FastAPI, HTTPException, Form, BackgroundTasks, Request
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, StreamingResponse, JSONResponse
+from fastapi import FastAPI, HTTPException, Form, BackgroundTasks, Request # type: ignore
+from fastapi.middleware.cors import CORSMiddleware # type: ignore
+from fastapi.responses import FileResponse, StreamingResponse, JSONResponse # type: ignore
 import os
 import socket
-import uvicorn
+import uvicorn # type: ignore
 import logging
 import subprocess
 import sys
@@ -11,7 +11,7 @@ import asyncio
 from typing import Dict, List, Optional, Any
 import json
 from pathlib import Path
-import aiofiles
+import aiofiles # type: ignore
 import time
 from datetime import datetime
 import shutil
@@ -215,7 +215,7 @@ def initialize_yt_dlp():
     """Initialize yt-dlp with comprehensive error handling"""
     global youtube_dlp
     try:
-        import yt_dlp as youtube_dlp
+        import yt_dlp as youtube_dlp # type: ignore
         add_debug_log('info', "✅ yt-dlp imported successfully")
         
         # Test yt-dlp functionality

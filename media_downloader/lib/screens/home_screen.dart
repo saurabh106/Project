@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings, prefer_final_fields, unnecessary_import, avoid_print, unused_element, unrelated_type_equality_checks, curly_braces_in_flow_control_structures
+
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:permission_handler/permission_handler.dart';
