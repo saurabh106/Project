@@ -206,15 +206,18 @@ export default function CreateEventPage() {
 
   return (
     <div
-      className="min-h-screen transition-colors duration-300 px-6 py-8 -mt-6 md:-mt-16 lg:-mt-5 lg:rounded-md"
-      style={{ backgroundColor: themeColor }}
+      className="min-h-screen transition-colors duration-500 px-6 py-12 -mt-6 md:-mt-16 lg:-mt-5 lg:rounded-3xl relative overflow-hidden"
     >
+      <div className="absolute inset-0 opacity-20" style={{ backgroundColor: themeColor }} />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-background/50 to-background pointer-events-none" />
+      
+      <div className="relative z-10">
       {/* Header */}
-      <div className="max-w-6xl mx-auto flex flex-col gap-5 md:flex-row justify-between mb-10">
-        <div>
-          <h1 className="text-4xl font-bold">Create Event</h1>
+      <div className="max-w-6xl mx-auto flex flex-col gap-5 md:flex-row justify-between mb-12 items-end">
+        <div className="space-y-2">
+          <h1 className="text-5xl font-extrabold tracking-tight drop-shadow-md">Create Event</h1>
           {!hasPro && (
-            <p className="text-sm text-muted-foreground mt-2">
+            <p className="text-sm font-medium text-white/60 bg-white/10 px-3 py-1 rounded-full inline-block backdrop-blur-sm border border-white/5">
               Free: {currentUser?.freeEventsCreated || 0}/1 events created
             </p>
           )}
@@ -300,38 +303,38 @@ export default function CreateEventPage() {
         </div>
 
         {/* RIGHT: Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 bg-zinc-950/40 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-2xl">
           {/* Title */}
           <div>
             <Input
               {...register("title")}
               placeholder="Event Name"
-              className="text-3xl font-semibold bg-transparent border-none focus-visible:ring-0"
+              className="text-4xl font-bold bg-transparent border-none focus-visible:ring-0 px-0 h-auto placeholder:text-white/20"
             />
             {errors.title && (
-              <p className="text-sm text-red-400 mt-1">
+              <p className="text-sm text-red-400 mt-2">
                 {errors.title.message}
               </p>
             )}
           </div>
 
           {/* Date + Time */}
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-8">
             {/* Start */}
-            <div className="space-y-2">
-              <Label className="text-sm">Start</Label>
-              <div className="grid grid-cols-[1fr_auto] gap-2">
+            <div className="space-y-3">
+              <Label className="text-sm font-medium text-zinc-400">Start</Label>
+              <div className="grid grid-cols-[1fr_auto] gap-3">
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
-                      className="w-full justify-between"
+                      className="w-full justify-between bg-white/5 border-white/10 hover:bg-white/10"
                     >
                       {startDate ? format(startDate, "PPP") : "Pick date"}
                       <CalendarIcon className="w-4 h-4 opacity-60" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="p-0">
+                  <PopoverContent className="p-0 border-white/10 bg-zinc-950/90 backdrop-blur-xl">
                     <Calendar
                       mode="single"
                       selected={startDate}
@@ -343,6 +346,7 @@ export default function CreateEventPage() {
                   type="time"
                   {...register("startTime")}
                   placeholder="hh:mm"
+                  className="bg-white/5 border-white/10"
                 />
               </div>
               {(errors.startDate || errors.startTime) && (
@@ -353,20 +357,20 @@ export default function CreateEventPage() {
             </div>
 
             {/* End */}
-            <div className="space-y-2">
-              <Label className="text-sm">End</Label>
-              <div className="grid grid-cols-[1fr_auto] gap-2">
+            <div className="space-y-3">
+              <Label className="text-sm font-medium text-zinc-400">End</Label>
+              <div className="grid grid-cols-[1fr_auto] gap-3">
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
-                      className="w-full justify-between"
+                      className="w-full justify-between bg-white/5 border-white/10 hover:bg-white/10"
                     >
                       {endDate ? format(endDate, "PPP") : "Pick date"}
                       <CalendarIcon className="w-4 h-4 opacity-60" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="p-0">
+                  <PopoverContent className="p-0 border-white/10 bg-zinc-950/90 backdrop-blur-xl">
                     <Calendar
                       mode="single"
                       selected={endDate}
@@ -379,6 +383,7 @@ export default function CreateEventPage() {
                   type="time"
                   {...register("endTime")}
                   placeholder="hh:mm"
+                  className="bg-white/5 border-white/10"
                 />
               </div>
               {(errors.endDate || errors.endTime) && (
@@ -390,17 +395,17 @@ export default function CreateEventPage() {
           </div>
 
           {/* Category */}
-          <div className="space-y-2">
-            <Label className="text-sm">Category</Label>
+          <div className="space-y-3">
+            <Label className="text-sm font-medium text-zinc-400">Category</Label>
             <Controller
               control={control}
               name="category"
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full bg-white/5 border-white/10">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="border-white/10 bg-zinc-950/90 backdrop-blur-xl">
                     {CATEGORIES.map((cat) => (
                       <SelectItem key={cat.id} value={cat.id}>
                         {cat.icon} {cat.label}
@@ -416,8 +421,8 @@ export default function CreateEventPage() {
           </div>
 
           {/* Location */}
-          <div className="space-y-3">
-            <Label className="text-sm">Location</Label>
+          <div className="space-y-4">
+            <Label className="text-sm font-medium text-zinc-400">Location</Label>
             <div className="grid grid-cols-2 gap-4">
               <Controller
                 control={control}
@@ -430,10 +435,10 @@ export default function CreateEventPage() {
                       setValue("city", "");
                     }}
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full bg-white/5 border-white/10">
                       <SelectValue placeholder="Select state" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="border-white/10 bg-zinc-950/90 backdrop-blur-xl">
                       {indianStates.map((s) => (
                         <SelectItem key={s.isoCode} value={s.name}>
                           {s.name}
@@ -453,14 +458,14 @@ export default function CreateEventPage() {
                     onValueChange={field.onChange}
                     disabled={!selectedState}
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full bg-white/5 border-white/10">
                       <SelectValue
                         placeholder={
                           selectedState ? "Select city" : "Select state first"
                         }
                       />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="border-white/10 bg-zinc-950/90 backdrop-blur-xl">
                       {cities.map((c) => (
                         <SelectItem key={c.name} value={c.name}>
                           {c.name}
@@ -472,13 +477,14 @@ export default function CreateEventPage() {
               />
             </div>
 
-            <div className="space-y-2 mt-6">
-              <Label className="text-sm">Venue Details</Label>
+            <div className="space-y-3 mt-6">
+              <Label className="text-sm font-medium text-zinc-400">Venue Details</Label>
 
               <Input
                 {...register("venue")}
                 placeholder="Venue link (Google Maps Link)"
                 type="url"
+                className="bg-white/5 border-white/10"
               />
               {errors.venue && (
                 <p className="text-sm text-red-400">{errors.venue.message}</p>
@@ -487,17 +493,19 @@ export default function CreateEventPage() {
               <Input
                 {...register("address")}
                 placeholder="Full address / street / building (optional)"
+                className="bg-white/5 border-white/10"
               />
             </div>
           </div>
 
           {/* Description */}
-          <div className="space-y-2">
-            <Label>Description</Label>
+          <div className="space-y-3">
+            <Label className="text-sm font-medium text-zinc-400">Description</Label>
             <Textarea
               {...register("description")}
               placeholder="Tell people about your event..."
               rows={4}
+              className="bg-white/5 border-white/10 resize-none"
             />
             {errors.description && (
               <p className="text-sm text-red-400">
@@ -507,21 +515,22 @@ export default function CreateEventPage() {
           </div>
 
           {/* Ticketing */}
-          <div className="space-y-3">
-            <Label className="text-sm">Tickets</Label>
-            <div className="flex items-center gap-6">
-              <label className="flex items-center gap-2">
+          <div className="space-y-4">
+            <Label className="text-sm font-medium text-zinc-400">Tickets</Label>
+            <div className="flex items-center gap-8 bg-white/5 p-4 rounded-xl border border-white/10">
+              <label className="flex items-center gap-3 cursor-pointer">
                 <input
                   type="radio"
                   value="free"
                   {...register("ticketType")}
                   defaultChecked
+                  className="w-4 h-4 accent-indigo-500"
                 />{" "}
-                Free
+                <span className="font-medium">Free</span>
               </label>
-              <label className="flex items-center gap-2">
-                <input type="radio" value="paid" {...register("ticketType")} />{" "}
-                Paid
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input type="radio" value="paid" {...register("ticketType")} className="w-4 h-4 accent-indigo-500" />{" "}
+                <span className="font-medium">Paid</span>
               </label>
             </div>
 
@@ -530,17 +539,19 @@ export default function CreateEventPage() {
                 type="number"
                 placeholder="Ticket price ₹"
                 {...register("ticketPrice", { valueAsNumber: true })}
+                className="bg-white/5 border-white/10"
               />
             )}
           </div>
 
           {/* Capacity */}
-          <div className="space-y-2">
-            <Label className="text-sm">Capacity</Label>
+          <div className="space-y-3">
+            <Label className="text-sm font-medium text-zinc-400">Capacity</Label>
             <Input
               type="number"
               {...register("capacity", { valueAsNumber: true })}
               placeholder="Ex: 100"
+              className="bg-white/5 border-white/10"
             />
             {errors.capacity && (
               <p className="text-sm text-red-400">{errors.capacity.message}</p>
@@ -551,14 +562,14 @@ export default function CreateEventPage() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full py-6 text-lg rounded-xl"
+            className="w-full py-7 text-lg rounded-xl font-bold tracking-wide bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-xl shadow-indigo-500/20 border-0"
           >
             {isLoading ? (
               <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Creating...
+                <Loader2 className="w-5 h-5 mr-3 animate-spin" /> Creating...
               </>
             ) : (
-              "Create Event"
+              "Publish Event"
             )}
           </Button>
         </form>
@@ -582,6 +593,7 @@ export default function CreateEventPage() {
         onClose={() => setShowUpgradeModal(false)}
         trigger={upgradeReason}
       />
+      </div>
     </div>
   );
 }

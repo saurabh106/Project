@@ -1,7 +1,5 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+import { generateWithGemini } from "@/lib/gemini";
 
 export async function POST(req) {
   try {
@@ -13,8 +11,6 @@ export async function POST(req) {
         { status: 400 }
       );
     }
-
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const systemPrompt = `You are an event planning assistant. Generate event details based on the user's description.
 
@@ -40,31 +36,32 @@ Rules:
 - suggestedTicketType should be either "free" or "paid"
 `;
 
-    const result = await model.generateContent(systemPrompt);
+    // ✅ USE YOUR WORKING GEMINI WRAPPER
+    const text = await generateWithGemini(systemPrompt);
 
-    const response = await result.response;
-    const text = response.text();
+    // ✅ SAME CLEANING LOGIC (from quiz)
+    const cleanedText = text
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
 
-    // Clean the response (remove markdown code blocks if present)
-    let cleanedText = text.trim();
-    if (cleanedText.startsWith("```json")) {
-      cleanedText = cleanedText
-        .replace(/```json\n?/g, "")
-        .replace(/```\n?/g, "");
-    } else if (cleanedText.startsWith("```")) {
-      cleanedText = cleanedText.replace(/```\n?/g, "");
-    }
+    const start = cleanedText.indexOf("{");
+    const end = cleanedText.lastIndexOf("}") + 1;
 
-    console.log(cleanedText);
-
-    const eventData = JSON.parse(cleanedText);
+    const eventData = JSON.parse(cleanedText.slice(start, end));
 
     return NextResponse.json(eventData);
   } catch (error) {
     console.error("Error generating event:", error);
-    return NextResponse.json(
-      { error: "Failed to generate event" + error.message },
-      { status: 500 }
-    );
+
+    // ✅ fallback (same style as quiz)
+    return NextResponse.json({
+      title: "Sample Event",
+      description:
+        "AI service is currently unavailable. Please try again later.",
+      category: "community",
+      suggestedCapacity: 50,
+      suggestedTicketType: "free",
+    });
   }
 }

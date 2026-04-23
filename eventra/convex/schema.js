@@ -103,4 +103,14 @@ export default defineSchema({
     .index("by_user", ["userId"])
     .index("by_event_user", ["eventId", "userId"])
     .index("by_qr_code", ["qrCode"]),
+
+  // Saved Events (Bookmarks)
+  savedEvents: defineTable({
+    userId: v.id("users"),
+    eventId: v.id("events"),
+    savedAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_event", ["eventId"])
+    .index("by_user_event", ["userId", "eventId"]),
 });

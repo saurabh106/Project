@@ -89,11 +89,15 @@ export default function ExplorePage() {
   return (
     <>
       {/* Hero Title */}
-      <div className="pb-12 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold mb-4">Discover Events</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Explore featured events, find what&apos;s happening locally, or browse
-          events across India
+      <div className="pb-16 text-center pt-8">
+        <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+          Explore{" "}
+          <span className="bg-linear-to-r from-indigo-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">
+            Experiences
+          </span>
+        </h1>
+        <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto font-light leading-relaxed">
+          Discover handpicked events, explore your local scene, or browse what&apos;s trending across the globe.
         </p>
       </div>
 
@@ -200,23 +204,26 @@ export default function ExplorePage() {
       )}
 
       {/* Browse by Category */}
-      <div className="mb-16">
-        <h2 className="text-3xl font-bold mb-6">Browse by Category</h2>
+      <div className="mb-20">
+        <h2 className="text-3xl font-bold mb-8">Browse by Category</h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-5">
           {categoriesWithCounts.map((category) => (
             <Card
               key={category.id}
-              className="py-2 group cursor-pointer hover:shadow-lg transition-all hover:border-purple-500/50"
+              className="py-0 group cursor-pointer hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:-translate-y-2 transition-all duration-500 bg-zinc-950/50 backdrop-blur-lg border-white/5 overflow-hidden"
               onClick={() => handleCategoryClick(category.id)}
             >
-              <CardContent className="px-3 sm:p-6 flex items-center gap-3">
-                <div className="text-3xl sm:text-4xl">{category.icon}</div>
+              <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <CardContent className="px-5 py-6 sm:p-8 flex flex-col items-center text-center gap-4 relative z-10">
+                <div className="text-4xl sm:text-5xl transform group-hover:scale-110 transition-transform duration-500 drop-shadow-2xl">
+                  {category.icon}
+                </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold mb-1 group-hover:text-purple-400 transition-colors">
+                  <h3 className="font-bold text-lg mb-1 group-hover:text-indigo-400 transition-colors duration-300 tracking-wide">
                     {category.label}
                   </h3>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-zinc-500 font-medium bg-white/5 inline-block px-3 py-1 rounded-full border border-white/5">
                     {category.count} Event{category.count !== 1 ? "s" : ""}
                   </p>
                 </div>

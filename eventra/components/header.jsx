@@ -2,9 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Building, Crown, Plus, Sparkles, Ticket } from "lucide-react";
-import { SignInButton, useAuth, UserButton, useUser } from "@clerk/nextjs";
-import { Authenticated, Unauthenticated } from "convex/react";
+import { Building, Crown, Plus, Sparkles, Ticket, Bookmark } from "lucide-react";
+import { SignInButton, useAuth, UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import { BarLoader } from "react-spinners";
 import { useStoreUser } from "@/hooks/use-store-user";
 import { useOnboarding } from "@/hooks/use-onboarding";
@@ -31,17 +30,14 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <Image
-              src="/spott.png"
-              alt="Spott logo"
-              width={500}
-              height={500}
-              className="w-full h-11"
-              priority
-            />
-            {/* <span className="text-purple-500 text-2xl font-bold">spott*</span> */}
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-6 h-6 text-indigo-400" />
+              <span className="font-extrabold text-2xl tracking-tight bg-clip-text text-transparent bg-linear-to-r from-indigo-400 via-purple-400 to-pink-400">
+                Eventra
+              </span>
+            </div>
             {hasPro && (
-              <Badge className="bg-linear-to-r from-pink-500 to-orange-500 gap-1 text-white ml-3">
+              <Badge className="bg-linear-to-r from-pink-500 to-orange-500 gap-1 text-white ml-3 shadow-lg shadow-pink-500/20">
                 <Crown className="w-3 h-3" />
                 Pro
               </Badge>
@@ -70,9 +66,9 @@ export default function Header() {
               <Link href="/explore">Explore</Link>
             </Button>
 
-            <Authenticated>
+            <SignedIn>
               {/* Create Event Button */}
-              <Button size="sm" asChild className="flex gap-2 mr-4">
+              <Button size="sm" asChild className="flex gap-2 mr-4 bg-indigo-600 hover:bg-indigo-700 text-white border-0 shadow-md shadow-indigo-500/20">
                 <Link href="/create-event">
                   <Plus className="w-4 h-4" />
                   <span className="hidden sm:inline">Create Event</span>
@@ -84,7 +80,7 @@ export default function Header() {
                 afterSignOutUrl="/"
                 appearance={{
                   elements: {
-                    avatarBox: "w-9 h-9",
+                    avatarBox: "w-9 h-9 border border-white/20",
                   },
                 }}
               >
@@ -99,16 +95,21 @@ export default function Header() {
                     labelIcon={<Building size={16} />}
                     href="/my-events"
                   />
+                  <UserButton.Link
+                    label="Saved Events"
+                    labelIcon={<Bookmark size={16} />}
+                    href="/saved-events"
+                  />
                   <UserButton.Action label="manageAccount" />
                 </UserButton.MenuItems>
               </UserButton>
-            </Authenticated>
+            </SignedIn>
 
-            <Unauthenticated>
+            <SignedOut>
               <SignInButton mode="modal">
-                <Button size="sm">Sign In</Button>
+                <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white border-0 shadow-lg shadow-indigo-500/20">Sign In</Button>
               </SignInButton>
-            </Unauthenticated>
+            </SignedOut>
           </div>
         </div>
 

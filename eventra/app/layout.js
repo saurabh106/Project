@@ -8,8 +8,8 @@ import { ConvexClientProvider } from "@/components/convex-client-provider";
 import { Toaster } from "sonner";
 
 export const metadata = {
-  title: "Spott - Delightful Events Start Here",
-  description: "Discover and create amazing events",
+  title: "Eventra - The Ultimate Event Experience",
+  description: "Discover and create amazing events with Eventra",
 };
 
 export default function RootLayout({ children }) {
@@ -29,8 +29,9 @@ export default function RootLayout({ children }) {
               <main className="relative min-h-screen container mx-auto pt-40 md:pt-32">
                 {/* Background glow effects (behind everything) */}
                 <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-                  <div className="absolute top-0 left-1/4 w-96 h-96 bg-pink-600/20 rounded-full blur-3xl" />
-                  <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-600/20 rounded-full blur-3xl" />
+                  <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl animate-pulse" />
+                  <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl" />
+                  <div className="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-pink-600/10 rounded-full blur-[100px] transform -translate-x-1/2 -translate-y-1/2" />
                 </div>
 
                 {/* Page content (above glow) */}
