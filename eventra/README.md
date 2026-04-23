@@ -1,76 +1,86 @@
-# Project Documentation: Spott (AI Event Organiser)
+# Eventra - Technical Documentation
 
-## 1. Project Overview & Motive
-
-**Project Name:** Spott
-**Core Motive:** Spott is a modern, full-stack web application designed to seamlessly bridge the gap between event organizers and attendees. It aims to provide a beautiful, frictionless experience for users to discover local or online events, seamlessly register for them, and easily host their own events. 
-
-The platform simplifies event ticketing by generating unique QR codes for attendees and gives organizers a simple dashboard to manage capacities, locations, and attendees. The ultimate goal is to make event management as simple as a few clicks, leveraging modern UI/UX principles and real-time data sync.
+**Project Name:** Eventra (Formerly Spott)
+**Description:** A premium, modern, AI-powered event discovery and organization platform built with Next.js, Tailwind CSS, Convex, and Clerk.
+**Path:** `S:\backup\Project\eventra`
 
 ---
 
-## 2. Technical Architecture & Tech Stack
+## 1. Core Technologies & Architecture
 
-The application is built using a modern React stack, prioritizing performance, real-time updates, and developer experience.
-
-*   **Frontend Framework:** Next.js 16 (App Router) with React 19.
-*   **Styling:** Tailwind CSS v4.
-*   **UI Components:** Shadcn UI (Radix UI primitives) for accessible, customizable components.
-*   **Backend & Database:** Convex. Provides a real-time, serverless database and cloud functions.
-*   **Authentication:** Clerk. Handles user sign-ups, secure sessions, and JWT-based authorization with Convex.
-*   **Image Sourcing:** Unsplash API integration to fetch high-quality cover photos for events.
-*   **Ticketing:** QR code generation (`react-qr-code`) and scanning (`html5-qrcode`) for seamless event check-ins.
-*   **AI Integration:** Google Generative AI (Gemini) integration (via `@google/generative-ai`), likely intended to assist organizers in generating event descriptions, suggesting tags, or optimizing schedules.
+*   **Framework:** Next.js 16 (App Router)
+*   **Styling:** Tailwind CSS v4 with dark-mode Glassmorphism aesthetics (vibrant neon gradients, `backdrop-blur`).
+*   **Database & Real-time:** Convex (Serverless Backend).
+*   **Authentication:** Clerk (Using `<SignedIn>`, `<SignedOut>`, and `<UserButton>`).
+*   **AI Integration:** Google Gemini API (Robust multi-model fallback wrapper).
+*   **Media/Images:** Unsplash API (for event cover generation).
+*   **Ticketing:** QR Code generation (`react-qr-code`) & scanning (`html5-qrcode`).
 
 ---
 
-## 3. Core Features & Routing Structure
+## 2. Features & Capabilities
 
-The application is split into protected routes (requiring login) and public routes.
+### **Event Discovery (`/explore`)**
+*   Premium "Bento box" style category browser.
+*   Automated geo-location sorting (finds events in your city/state).
+*   Beautiful glassmorphic event cards featuring interactive hover effects, animated cover images, and floating badges.
 
-### Public Features (`app/(public)`)
-*   **Landing Page (`/`):** A visually striking hero section introducing "Spott" and encouraging users to explore.
-*   **Explore (`/explore`):** A discovery feed where users can search for events based on categories, titles, or dates.
-*   **Event Details (`/events/[slug]`):** A detailed view of a specific event showing date, location (physical/online), capacity, price, and a registration button.
+### **Saved Events / Bookmarking (`/saved-events`) [NEW]**
+*   Users can bookmark events to revisit later without registering.
+*   **Frontend:** A floating bookmark button on `EventCard` that highlights when an event is saved. Includes a dedicated dashboard (`/saved-events`) accessible via the User profile dropdown.
+*   **Backend:** Powered by real-time Convex mutations (`api.savedEvents.toggleSave`) and queries.
 
-### Protected Features for Organizers & Attendees (`app/(main)`)
-*   **Create Event (`/create-event`):** A robust form (powered by `react-hook-form` and `zod`) for users to create new events. Organizers can define capacity, free/paid status, physical/online locations, and pick an Unsplash cover image.
-*   **My Events (`/my-events`):** A dashboard for organizers to view the events they have hosted and track registration counts.
-*   **My Tickets (`/my-tickets`):** A digital wallet for attendees displaying their confirmed registrations. This includes a unique QR code for each ticket that organizers can scan for check-in.
+### **AI-Powered Event Creation (`/create-event`)**
+*   Organizers can prompt the AI to auto-fill event details (title, description, category, capacity, etc.).
+*   **Robust Gemini Wrapper (`lib/gemini.js`):** [NEW] The AI integration automatically fetches available Gemini models (e.g., `gemini-1.5-flash`), falls back to secondary models if one fails, and automatically retries on `503` or `429` rate-limit errors.
+*   Generates gorgeous, Unsplash-powered cover photos.
 
----
+### **Ticketing & Dashboard (`/my-tickets`, `/my-events`)**
+*   Users receive dynamic QR codes upon registration.
+*   Organizers can check-in attendees by scanning QR codes.
+*   Safe loading states and authentication handling prevent "null user" crashes.
 
-## 4. Database Schema (Convex Models)
-
-The data layer is structured in `convex/schema.js` and consists of three main tables:
-
-### A. `users` Table
-Stores user profiles and limits.
-*   **Auth:** `tokenIdentifier` (links to Clerk), `email`, `name`, `imageUrl`.
-*   **Preferences:** `location` (city, state, country), `interests` (array of categories to personalize the explore feed).
-*   **Organizer Limits:** `freeEventsCreated` (tracks how many events a user has hosted to enforce free-tier limits).
-
-### B. `events` Table
-Stores all event details.
-*   **Basic Info:** `title`, `description`, `slug`, `category`, `tags`.
-*   **Logistics:** `startDate`, `endDate`, `timezone`.
-*   **Location:** `locationType` (physical or online), `venue`, `address`, `city`, `country`.
-*   **Ticketing:** `capacity`, `ticketType` (free/paid), `ticketPrice`, `registrationCount`.
-*   **Media:** `coverImage`, `themeColor`.
-*   **Relations:** `organizerId` (links to `users`).
-
-### C. `registrations` Table
-The "Tickets" table mapping users to events.
-*   **Relations:** `eventId` (links to `events`), `userId` (links to `users`).
-*   **Attendee Info:** `attendeeName`, `attendeeEmail`.
-*   **Access:** `qrCode` (unique string for entry), `status` (confirmed/cancelled).
-*   **Check-in Logic:** `checkedIn` (boolean), `checkedInAt` (timestamp).
+### **Premium Upgrades**
+*   Custom UI mockup for "Eventra Pro" upgrade modal (bypasses Clerk Billing requirement for local development).
 
 ---
 
-## 5. Development Workflow
+## 3. Database Schema (Convex)
 
-1.  **UI Construction:** Components are built modularly in `components/ui/` (Shadcn UI) and custom domain components in `components/`.
-2.  **State & Data Fetching:** Frontend components use Convex React hooks (`useQuery`, `useMutation`) to interact with `convex/*.js` server functions.
-3.  **Form Submissions:** When an event is created, it passes through Zod validation before firing a Convex mutation.
-4.  **Real-time sync:** Because it uses Convex, actions like a user registering for an event instantly update the `registrationCount` on the frontend for all users viewing that event without a page reload.
+The real-time database consists of three main tables:
+
+1.  **`users`**: Stores user profiles, preferences (location, interests), and tracks how many free events the user has created. Linked to Clerk via `tokenIdentifier`.
+2.  **`events`**: Stores comprehensive event data (dates, location type, capacities, tickets, organizer ID, theming).
+3.  **`registrations`**: Maps `users` to `events`, containing QR codes and check-in statuses.
+4.  **`savedEvents` [NEW]**: Maps `users` to `events` they have bookmarked, including the timestamp of when it was saved.
+
+---
+
+## 4. Environment Variables Required
+
+For deployment (e.g., Vercel) or cloning, you must have the following `.env.local`:
+
+```env
+# Clerk Auth
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+
+# Convex Database
+CONVEX_DEPLOYMENT=dev:...
+NEXT_PUBLIC_CONVEX_URL=https://...
+
+# AI & Media
+GEMINI_API_KEY=AIza...
+NEXT_PUBLIC_UNSPLASH_ACCESS_KEY=...
+```
+
+---
+
+## 5. Recent Bug Fixes & Refactors
+
+*   **Auth Flicker:** Replaced Convex's `<Authenticated>`/`<Unauthenticated>` wrappers with Clerk's `<SignedIn>`/`<SignedOut>` to fix the "Sign In" button flashing for already-logged-in users.
+*   **Registration Crash:** Fixed a null-pointer exception (`Cannot read properties of null (reading '_id')`) on `/my-tickets` by gracefully handling unauthenticated states while Convex syncs with Clerk.
+*   **Clerk Billing Crash:** Removed `<PricingTable />` to prevent development crashes since Stripe billing is disabled in the Clerk Dashboard, replacing it with a custom glassmorphic UI.
+*   **Gemini Rate Limits:** Updated the API route to use a custom retry/fallback mechanism.
