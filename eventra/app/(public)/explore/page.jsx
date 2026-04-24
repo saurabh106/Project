@@ -89,14 +89,18 @@ export default function ExplorePage() {
   return (
     <>
       {/* Hero Title */}
-      <div className="pb-16 text-center pt-8">
-        <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+      <div className="pb-20 text-center pt-16 relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
+        <h1 className="relative text-6xl md:text-8xl font-extrabold mb-8 tracking-tighter drop-shadow-2xl text-white">
           Explore{" "}
-          <span className="bg-linear-to-r from-indigo-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">
-            Experiences
+          <span className="relative inline-block">
+            <span className="absolute -inset-2 bg-gradient-to-r from-primary via-accent to-secondary opacity-30 blur-xl animate-pulse-glow rounded-full"></span>
+            <span className="relative bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">
+              Experiences
+            </span>
           </span>
         </h1>
-        <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto font-light leading-relaxed">
+        <p className="relative text-xl md:text-2xl text-zinc-400 max-w-2xl mx-auto font-light leading-relaxed">
           Discover handpicked events, explore your local scene, or browse what&apos;s trending across the globe.
         </p>
       </div>
@@ -204,26 +208,31 @@ export default function ExplorePage() {
       )}
 
       {/* Browse by Category */}
-      <div className="mb-20">
-        <h2 className="text-3xl font-bold mb-8">Browse by Category</h2>
+      <div className="mb-24 relative">
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-secondary/10 blur-[120px] rounded-full pointer-events-none" />
+        <h2 className="text-4xl font-extrabold mb-10 tracking-tight text-white flex items-center gap-4">
+          <span className="w-8 h-1 bg-gradient-to-r from-primary to-accent rounded-full"></span>
+          Browse by Category
+        </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
           {categoriesWithCounts.map((category) => (
             <Card
               key={category.id}
-              className="py-0 group cursor-pointer hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:-translate-y-2 transition-all duration-500 bg-zinc-950/50 backdrop-blur-lg border-white/5 overflow-hidden"
+              className="py-0 group cursor-pointer hover:shadow-[0_0_40px_rgba(168,85,247,0.25)] hover:-translate-y-2 transition-all duration-500 glass-panel overflow-hidden border-white/10"
               onClick={() => handleCategoryClick(category.id)}
             >
-              <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <CardContent className="px-5 py-6 sm:p-8 flex flex-col items-center text-center gap-4 relative z-10">
-                <div className="text-4xl sm:text-5xl transform group-hover:scale-110 transition-transform duration-500 drop-shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <CardContent className="px-5 py-8 sm:p-10 flex flex-col items-center text-center gap-5 relative z-10">
+                <div className="text-5xl sm:text-6xl transform group-hover:scale-125 transition-transform duration-700 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
                   {category.icon}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-bold text-lg mb-1 group-hover:text-indigo-400 transition-colors duration-300 tracking-wide">
+                <div className="flex-1 min-w-0 w-full mt-2">
+                  <h3 className="font-bold text-xl mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-indigo-400 group-hover:to-pink-400 transition-all duration-300 tracking-wide text-white">
                     {category.label}
                   </h3>
-                  <p className="text-sm text-zinc-500 font-medium bg-white/5 inline-block px-3 py-1 rounded-full border border-white/5">
+                  <div className="h-px w-12 bg-white/20 mx-auto mb-3 group-hover:w-full transition-all duration-500 ease-out"></div>
+                  <p className="text-sm text-zinc-300 font-semibold bg-white/10 inline-block px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-md shadow-inner">
                     {category.count} Event{category.count !== 1 ? "s" : ""}
                   </p>
                 </div>

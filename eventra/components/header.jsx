@@ -26,8 +26,8 @@ export default function Header() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-xl z-20 border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <nav className="fixed top-4 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-[95%] max-w-7xl glass-panel z-50 rounded-full transition-all duration-300">
+        <div className="px-6 py-3 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <div className="flex items-center gap-2">
@@ -114,7 +114,7 @@ export default function Header() {
         </div>
 
         {/* Mobile Search & Location - Below Header */}
-        <div className="md:hidden border-t px-3 py-3">
+        <div className="md:hidden px-4 pb-4">
           <SearchLocationBar />
         </div>
 

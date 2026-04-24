@@ -34,7 +34,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-linear-to-br from-gray-950 via-zinc-900 to-stone-900 text-white">
+      <body className="bg-background text-foreground overflow-x-hidden min-h-screen selection:bg-primary/30 selection:text-primary-foreground font-sans antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -46,11 +46,12 @@ export default async function RootLayout({ children }) {
               <Header />
 
               <main className="relative min-h-screen container mx-auto pt-40 md:pt-32">
-                {/* Background glow effects (behind everything) */}
-                <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-                  <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl animate-pulse" />
-                  <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl" />
-                  <div className="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-pink-600/10 rounded-full blur-[100px] transform -translate-x-1/2 -translate-y-1/2" />
+                {/* Ultra-premium background glowing orbs */}
+                <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-background">
+                  <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px] mix-blend-screen animate-float" />
+                  <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary/20 rounded-full blur-[150px] mix-blend-screen animate-float" style={{ animationDelay: '2s' }} />
+                  <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] bg-accent/20 rounded-full blur-[100px] mix-blend-screen animate-float" style={{ animationDelay: '4s' }} />
+                  <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
                 </div>
 
                 {/* Page content (above glow) */}
