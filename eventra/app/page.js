@@ -28,15 +28,12 @@ export default function LandingPage() {
           </div>
 
           {/* Epic Headline */}
-          <h1 className="text-6xl sm:text-7xl lg:text-[5.5rem] font-extrabold mb-8 leading-[1.05] tracking-tighter text-white drop-shadow-2xl">
+          <h1 className="text-5xl sm:text-6xl lg:text-[5.5rem] font-bold mb-6 leading-[1.05] tracking-tight text-white drop-shadow-sm">
             Where <br/>
             Moments <br/>
             Become <br/>
-            <span className="relative inline-block mt-2">
-              <span className="absolute -inset-2 bg-gradient-to-r from-primary via-accent to-secondary opacity-30 blur-2xl animate-pulse-glow rounded-full"></span>
-              <span className="relative bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">
-                Legendary.
-              </span>
+            <span className="text-zinc-400">
+              Legendary.
             </span>
           </h1>
 
@@ -46,14 +43,14 @@ export default function LandingPage() {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
             <Link href="/explore" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto py-7 px-10 text-lg rounded-full font-bold tracking-wide bg-gradient-to-r from-primary to-accent hover:from-primary/80 hover:to-accent/80 shadow-[0_0_40px_-10px_rgba(168,85,247,0.5)] border border-white/10 transition-all hover:scale-105">
+              <Button size="lg" className="w-full sm:w-auto py-6 px-8 text-base rounded-full font-semibold bg-white text-black hover:bg-zinc-200 transition-all">
                 Explore Experiences
               </Button>
             </Link>
             <Link href="/create-event" className="w-full sm:w-auto">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto py-7 px-10 text-lg rounded-full font-bold tracking-wide bg-zinc-950/30 border-white/10 hover:bg-white/10 hover:border-white/20 backdrop-blur-xl transition-all">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto py-6 px-8 text-base rounded-full font-semibold bg-zinc-950/50 border-zinc-800 hover:bg-zinc-900 transition-all text-white">
                 Host an Event
               </Button>
             </Link>
@@ -76,20 +73,20 @@ export default function LandingPage() {
 
         {/* Right Content - Stunning Imagery */}
         <div className="flex-1 w-full relative perspective-1000 mt-12 lg:mt-0">
-          <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-secondary/30 blur-[100px] rounded-full animate-pulse-glow" />
           
-          <div className="relative w-full aspect-[4/5] lg:aspect-square transform-gpu rotate-y-[-10deg] rotate-x-[5deg] hover:rotate-y-0 hover:rotate-x-0 transition-transform duration-1000 ease-out group">
+          <div className="relative w-full aspect-[4/5] lg:aspect-square transform-gpu rotate-y-[-5deg] rotate-x-[2deg] hover:rotate-y-0 hover:rotate-x-0 transition-transform duration-1000 ease-out group">
             
             {/* Main Image */}
-            <div className="absolute inset-0 rounded-[2.5rem] overflow-hidden border border-white/20 shadow-[0_20px_100px_-20px_rgba(0,0,0,0.8)] bg-zinc-900">
+            <div className="absolute inset-0 overflow-hidden rounded-3xl border border-white/10 shadow-[0_20px_100px_-20px_rgba(0,0,0,0.5)]">
               <Image
-                src="https://images.unsplash.com/photo-1540039155732-6761b54cb116?q=80&w=2000"
-                alt="Spectacular Concert Event"
+                src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=2000"
+                alt="Premium Event Experience"
                 fill
+                unoptimized
                 className="object-cover transition-transform duration-[20s] ease-linear group-hover:scale-110 opacity-90"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
             </div>
 
             {/* Floating Glassmorphic Cards */}

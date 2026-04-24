@@ -46,12 +46,11 @@ export default async function RootLayout({ children }) {
               <Header />
 
               <main className="relative min-h-screen container mx-auto pt-40 md:pt-32">
-                {/* Ultra-premium background glowing orbs */}
-                <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-background">
-                  <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px] mix-blend-screen animate-float" />
-                  <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary/20 rounded-full blur-[150px] mix-blend-screen animate-float" style={{ animationDelay: '2s' }} />
-                  <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] bg-accent/20 rounded-full blur-[100px] mix-blend-screen animate-float" style={{ animationDelay: '4s' }} />
-                  <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
+                {/* Subtle, mature background gradients */}
+                <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-[#0a0a0a]">
+                  <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-indigo-900/10 rounded-full blur-[120px] mix-blend-screen" />
+                  <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-blue-900/10 rounded-full blur-[150px] mix-blend-screen" />
+                  <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay" />
                 </div>
 
                 {/* Page content (above glow) */}
