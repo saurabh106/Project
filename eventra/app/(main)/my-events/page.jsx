@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useConvexQuery, useConvexMutation } from "@/hooks/use-convex-query";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
+import { useAuth } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -13,8 +14,9 @@ import EventCard from "@/components/event-card";
 
 export default function MyEventsPage() {
   const router = useRouter();
+  const { userId } = useAuth();
 
-  const { data: events, isLoading } = useConvexQuery(api.events.getMyEvents);
+  const { data: events, isLoading } = useConvexQuery(api.events.getMyEvents, { clerkUserId: userId || "" });
   const { mutate: deleteEvent } = useConvexMutation(api.events.deleteEvent);
 
   const handleDelete = async (eventId) => {
@@ -25,7 +27,7 @@ export default function MyEventsPage() {
     if (!confirmed) return;
 
     try {
-      await deleteEvent({ eventId });
+      await deleteEvent({ eventId, clerkUserId: userId || "" });
       toast.success("Event deleted successfully");
     } catch (error) {
       toast.error(error.message || "Failed to delete event");

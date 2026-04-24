@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/incompatible-library */
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo,useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +9,8 @@ import * as z from "zod";
 import { format } from "date-fns";
 import { State, City } from "country-state-city";
 import { CalendarIcon, Loader2, Sparkles } from "lucide-react";
-import { useConvexMutation, useConvexQuery } from "@/hooks/use-convex-query";
+import {  useConvexQuery } from "@/hooks/use-convex-query";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { useAuth } from "@clerk/nextjs";
@@ -39,6 +40,9 @@ import UpgradeModal from "@/components/upgrade-modal";
 import { CATEGORIES } from "@/lib/data";
 import Image from "next/image";
 
+
+
+
 // HH:MM in 24h
 const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
 
@@ -67,15 +71,15 @@ export default function CreateEventPage() {
   const [showImagePicker, setShowImagePicker] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [upgradeReason, setUpgradeReason] = useState("limit"); // "limit" or "color"
+  const [isLoading, setIsLoading] = useState(false);
 
+  
   // Check if user has Pro plan
-  const { has } = useAuth();
-  const hasPro = has?.({ plan: "pro" });
+  const hasPro = false;
+  const { userId } = useAuth();
 
   const { data: currentUser } = useConvexQuery(api.users.getCurrentUser);
-  const { mutate: createEvent, isLoading } = useConvexMutation(
-    api.events.createEvent
-  );
+  const createEvent = useMutation(api.events.createEvent);
 
   const {
     register,
@@ -120,6 +124,26 @@ export default function CreateEventPage() {
     ...(hasPro ? ["#4c1d95", "#065f46", "#92400e", "#7f1d1d", "#831843"] : []),
   ];
 
+
+  const { getToken } = useAuth();
+
+useEffect(() => {
+  async function test() {
+    const token = await getToken({ template: "convex" });
+
+    console.log("🔥 TOKEN:", token);
+
+    if (token) {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      console.log("🔥 DECODED:", payload);
+    }
+  }
+
+  test();
+}, []);
+
+
+
   const handleColorClick = (color) => {
     // If not default color and user doesn't have Pro
     if (color !== "#1e3a8a" && !hasPro) {
@@ -138,62 +162,72 @@ export default function CreateEventPage() {
     return d;
   };
 
-  const onSubmit = async (data) => {
-    try {
-      const start = combineDateTime(data.startDate, data.startTime);
-      const end = combineDateTime(data.endDate, data.endTime);
+const onSubmit = async (data) => {
+  try {
+    setIsLoading(true);
 
-      if (!start || !end) {
-        toast.error("Please select both date and time for start and end.");
-        return;
-      }
-      if (end.getTime() <= start.getTime()) {
-        toast.error("End date/time must be after start date/time.");
-        return;
-      }
+    const start = combineDateTime(data.startDate, data.startTime);
+    const end = combineDateTime(data.endDate, data.endTime);
 
-      // Check event limit for Free users
-      if (!hasPro && currentUser?.freeEventsCreated >= 1) {
-        setUpgradeReason("limit");
-        setShowUpgradeModal(true);
-        return;
-      }
-
-      // Check if trying to use custom color without Pro
-      if (data.themeColor !== "#1e3a8a" && !hasPro) {
-        setUpgradeReason("color");
-        setShowUpgradeModal(true);
-        return;
-      }
-
-      await createEvent({
-        title: data.title,
-        description: data.description,
-        category: data.category,
-        tags: [data.category],
-        startDate: start.getTime(),
-        endDate: end.getTime(),
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        locationType: data.locationType,
-        venue: data.venue || undefined,
-        address: data.address || undefined,
-        city: data.city,
-        state: data.state || undefined,
-        country: "India",
-        capacity: data.capacity,
-        ticketType: data.ticketType,
-        ticketPrice: data.ticketPrice || undefined,
-        coverImage: data.coverImage || undefined,
-        themeColor: data.themeColor,
-        hasPro,
-      });
-
-      toast.success("Event created successfully! 🎉");
-      router.push("/my-events");
-    } catch (error) {
-      toast.error(error.message || "Failed to create event");
+    if (!start || !end) {
+      toast.error("Please select both date and time for start and end.");
+      setIsLoading(false);
+      return;
     }
-  };
+
+    if (end.getTime() <= start.getTime()) {
+      toast.error("End date/time must be after start date/time.");
+      setIsLoading(false);
+      return;
+    }
+
+    // Free limit check
+    if (!hasPro && currentUser?.freeEventsCreated >= 1) {
+      setUpgradeReason("limit");
+      setShowUpgradeModal(true);
+      setIsLoading(false);
+      return;
+    }
+
+    // Color restriction
+    if (data.themeColor !== "#1e3a8a" && !hasPro) {
+      setUpgradeReason("color");
+      setShowUpgradeModal(true);
+      setIsLoading(false);
+      return;
+    }
+
+    await createEvent({
+      title: data.title,
+      description: data.description,
+      category: data.category,
+      tags: [data.category],
+      startDate: start.getTime(),
+      endDate: end.getTime(),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      locationType: data.locationType,
+      venue: data.venue || undefined,
+      address: data.address || undefined,
+      city: data.city,
+      state: data.state || undefined,
+      country: "India",
+      capacity: data.capacity,
+      ticketType: data.ticketType,
+      ticketPrice: data.ticketPrice || undefined,
+      coverImage: data.coverImage || undefined,
+      themeColor: data.themeColor,
+      hasPro,
+    });
+
+    toast.success("Event created successfully! 🎉");
+    router.push("/my-events");
+  } catch (error) {
+    console.error("ERROR:", error);
+    toast.error(error.message || "Failed to create event");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   const handleAIGenerate = (generatedData) => {
     setValue("title", generatedData.title);

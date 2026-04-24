@@ -1,4 +1,5 @@
 import { ClerkProvider } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import Header from "@/components/header";
 import "./globals.css";
 import { dark } from "@clerk/themes";
@@ -12,7 +13,25 @@ export const metadata = {
   description: "Discover and create amazing events with Eventra",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  // DEBUGGING FOR CONVEX AUTH
+  try {
+    const { getToken } = await auth();
+    const token = await getToken({ template: "convex" });
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      console.log("\n\n🔥 ================================= 🔥");
+      console.log("🔥 NEXT.JS SERVER - JWT PAYLOAD:");
+      console.log("ISS (Issuer):", payload.iss);
+      console.log("AUD (Audience):", payload.aud);
+      console.log("🔥 ================================= 🔥\n\n");
+    } else {
+      console.log("\n\n🔥 NO 'convex' TOKEN FOUND! The Clerk JWT Template doesn't exist! 🔥\n\n");
+    }
+  } catch (e) {
+    // Ignore auth errors during build
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="bg-linear-to-br from-gray-950 via-zinc-900 to-stone-900 text-white">
