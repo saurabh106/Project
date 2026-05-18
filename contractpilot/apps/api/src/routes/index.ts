@@ -1,6 +1,9 @@
 import { Router } from "express";
+import contractRoutes from "./contracts";
 
 const router: Router = Router();
+
+router.use("/contracts", contractRoutes);
 
 router.get("/user/profile", (req, res) => {
   const auth = (req as any).auth;
