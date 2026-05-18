@@ -13,13 +13,19 @@ async function listModels() {
   
   try {
     console.log("Fetching models...");
-    // The @google/genai library might have a different method for listing models
-    // Let's try the common patterns
     const response = await (ai as any).models.list();
+    
     console.log("Available models:");
-    response.models.forEach((m: any) => {
-      console.log(`- ${m.name} (Supports: ${m.supportedGenerationMethods.join(", ")})`);
-    });
+    // Try both for-await-of and standard iteration
+    try {
+      for await (const m of response) {
+        console.log(`- ${m.name}`);
+      }
+    } catch (e) {
+      console.log("Not an async iterator, trying standard array...");
+      const models = Array.isArray(response) ? response : (response.models || []);
+      models.forEach((m: any) => console.log(`- ${m.name}`));
+    }
   } catch (error: any) {
     console.error("Error listing models:", error.message);
     if (error.response) {

@@ -77,15 +77,15 @@ export function FileUpload({ onSuccess }: { onSuccess?: () => void }) {
   };
 
   return (
-    <Card className="border-dashed border-2 bg-slate-50/50">
+    <Card className="border-dashed border-2 border-white/10 bg-slate-900/50 backdrop-blur-sm hover:border-blue-500/30 transition-all group">
       <CardContent className="p-8 flex flex-col items-center justify-center text-center">
         {!file ? (
           <>
-            <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mb-4">
-              <Upload size={24} />
+            <div className="w-14 h-14 rounded-2xl bg-blue-600/10 flex items-center justify-center text-blue-500 mb-4 group-hover:scale-110 transition-transform">
+              <Upload size={28} />
             </div>
-            <h3 className="text-lg font-bold mb-1">Upload Contract</h3>
-            <p className="text-sm text-slate-500 mb-6">Drag and drop or click to select a PDF</p>
+            <h3 className="text-lg font-black text-white mb-1 tracking-tight">Upload Vault</h3>
+            <p className="text-xs text-slate-500 mb-6 font-medium uppercase tracking-widest">Select legal PDF for AI processing</p>
             <input
               type="file"
               accept=".pdf"
@@ -93,23 +93,23 @@ export function FileUpload({ onSuccess }: { onSuccess?: () => void }) {
               ref={fileInputRef}
               onChange={handleFileChange}
             />
-            <Button variant="outline" className="cursor-pointer" onClick={triggerFileInput}>
-              Select PDF File
+            <Button variant="outline" className="cursor-pointer rounded-xl border-white/10 bg-slate-950/50 hover:bg-white/5 text-slate-300 font-bold px-8" onClick={triggerFileInput}>
+              Browse Files
             </Button>
           </>
         ) : (
           <div className="w-full">
-            <div className="flex items-center gap-3 p-4 bg-white rounded-xl border border-blue-200 mb-6">
-              <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
+            <div className="flex items-center gap-3 p-4 bg-slate-950/50 rounded-2xl border border-blue-500/20 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
                 <File size={20} />
               </div>
               <div className="flex-1 text-left">
-                <p className="text-sm font-bold truncate max-w-[200px]">{file.name}</p>
-                <p className="text-xs text-slate-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                <p className="text-sm font-bold text-white truncate max-w-[150px]">{file.name}</p>
+                <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
               </div>
               <button 
                 onClick={() => setFile(null)} 
-                className="p-1 hover:bg-slate-100 rounded-full"
+                className="p-1.5 hover:bg-white/5 rounded-xl text-slate-500 hover:text-white transition-all"
                 disabled={uploading}
               >
                 <X size={18} />
@@ -117,17 +117,17 @@ export function FileUpload({ onSuccess }: { onSuccess?: () => void }) {
             </div>
             
             <Button 
-              className="w-full" 
+              className="w-full rounded-xl bg-blue-600 hover:bg-blue-500 font-black uppercase tracking-widest text-[10px] py-6 shadow-lg shadow-blue-500/10" 
               onClick={handleUpload} 
               disabled={uploading}
             >
               {uploading ? (
                 <>
-                  <Loader2 className="mr-2 animate-spin" size={18} />
-                  Uploading...
+                  <Loader2 className="mr-2 animate-spin" size={16} />
+                  Processing...
                 </>
               ) : (
-                "Confirm Upload"
+                "Confirm & Analyze"
               )}
             </Button>
           </div>
@@ -135,17 +135,14 @@ export function FileUpload({ onSuccess }: { onSuccess?: () => void }) {
 
         {status === "success" && (
           <div className="mt-4 flex flex-col items-center gap-2">
-            <div className="flex items-center gap-2 text-emerald-600 text-sm font-bold">
-              <CheckCircle size={16} /> Uploaded successfully!
+            <div className="flex items-center gap-2 text-emerald-400 text-xs font-black uppercase tracking-widest">
+              <CheckCircle size={14} /> Vault Synchronized
             </div>
-            <Button variant="ghost" size="sm" onClick={() => window.location.reload()}>
-              Refresh List
-            </Button>
           </div>
         )}
         {status === "error" && (
-          <div className="mt-4 text-rose-600 text-sm font-bold">
-            Upload failed. Please check the console for details.
+          <div className="mt-4 text-rose-400 text-xs font-black uppercase tracking-widest">
+            Synchronization Failed
           </div>
         )}
       </CardContent>

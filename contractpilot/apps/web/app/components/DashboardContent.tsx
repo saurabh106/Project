@@ -17,7 +17,10 @@ import {
   Zap,
   Trash2,
   ExternalLink,
-  Loader2
+  Loader2,
+  Scale,
+  ArrowRight,
+  Layers
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
@@ -43,8 +46,7 @@ export function DashboardContent() {
   const [analyzingId, setAnalyzingId] = useState<string | null>(null);
   const [selectedAnalysis, setSelectedAnalysis] = useState<any | null>(null);
   const [selectedContractId, setSelectedContractId] = useState<string | null>(null);
-
-  console.log("DashboardContent Rendering, analyzingId:", analyzingId);
+  const [view, setView] = useState<'dashboard' | 'history' | 'analytics' | 'settings'>('dashboard');
 
   const fetchContracts = useCallback(async () => {
     try {
@@ -70,17 +72,9 @@ export function DashboardContent() {
   }, [fetchContracts]);
 
   const handleAnalyze = async (id: string) => {
-    alert("Analyze started for ID: " + id);
-    console.log("Analyze button clicked for ID:", id);
     setAnalyzingId(id);
     try {
       const token = await getToken();
-      if (!token) {
-        console.error("No auth token found");
-        return;
-      }
-      
-      console.log("Sending analysis request to backend...");
       const response = await fetch(`http://localhost:4000/api/contracts/${id}/analyze`, {
         method: "POST",
         headers: {
@@ -88,21 +82,16 @@ export function DashboardContent() {
         },
       });
 
-      console.log("Backend response status:", response.status);
       const data = await response.json();
-      
       if (response.ok) {
-        console.log("Analysis successful:", data);
         setSelectedAnalysis(data.analysis);
         setSelectedContractId(id);
-        fetchContracts(); // Refresh to update status
+        fetchContracts();
       } else {
-        console.error("Analysis failed server-side:", data.error || data.message);
         alert(`Analysis failed: ${data.error || "Unknown error"}`);
       }
     } catch (error) {
       console.error("Analysis request failed:", error);
-      alert("Analysis request failed. Please check if the backend is running.");
     } finally {
       setAnalyzingId(null);
     }
@@ -110,7 +99,6 @@ export function DashboardContent() {
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this contract?")) return;
-
     try {
       const token = await getToken();
       const response = await fetch(`http://localhost:4000/api/contracts/${id}`, {
@@ -136,33 +124,39 @@ export function DashboardContent() {
   );
 
   return (
-    <div className="flex min-h-screen bg-slate-50/50">
+    <div className="flex min-h-screen bg-background text-foreground">
       {/* Sidebar */}
-      <aside className="w-64 border-r border-slate-200 bg-white hidden lg:flex flex-col sticky top-[65px] h-[calc(100vh-65px)] overflow-y-auto">
-        <div className="p-6 flex-1 text-slate-900">
+      <aside className="w-64 border-r border-white/5 bg-slate-900/50 backdrop-blur-xl hidden lg:flex flex-col sticky top-0 h-screen overflow-y-auto">
+        <div className="p-6 flex-1">
+          <div className="flex items-center gap-3 mb-10 px-2">
+            <div className="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 text-white">
+              <Scale size={24} />
+            </div>
+            <span className="text-xl font-black tracking-tighter text-glow">Pilot</span>
+          </div>
+
           <nav className="space-y-1">
-            <NavItem icon={<Home size={18} />} label="Dashboard" active={!selectedAnalysis} onClick={() => { setSelectedAnalysis(null); setSelectedContractId(null); }} />
-            <NavItem icon={<FileText size={18} />} label="My Contracts" onClick={() => { setSelectedAnalysis(null); setSelectedContractId(null); }} />
-            <NavItem icon={<BarChart3 size={18} />} label="Analytics" />
-            <NavItem icon={<Clock size={18} />} label="Activity" />
+            <NavItem icon={<Home size={18} />} label="Dashboard" active={view === 'dashboard' && !selectedAnalysis} onClick={() => { setView('dashboard'); setSelectedAnalysis(null); setSelectedContractId(null); }} />
+            <NavItem icon={<Clock size={18} />} label="History" active={view === 'history'} onClick={() => { setView('history'); setSelectedAnalysis(null); }} />
+            <NavItem icon={<BarChart3 size={18} />} label="Analytics" active={view === 'analytics'} onClick={() => { setView('analytics'); setSelectedAnalysis(null); }} />
           </nav>
           
-          <div className="mt-10 mb-4 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <div className="mt-10 mb-4 px-4 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
             Workspace
           </div>
           <nav className="space-y-1">
-            <NavItem icon={<Settings size={18} />} label="Settings" />
-            <NavItem icon={<AlertCircle size={18} />} label="Help Center" />
+            <NavItem icon={<Settings size={18} />} label="Settings" active={view === 'settings'} onClick={() => { setView('settings'); setSelectedAnalysis(null); }} />
+            <NavItem icon={<AlertCircle size={18} />} label="Support" />
           </nav>
 
-          <div className="mt-10 mb-4 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-            Recent Uploads
+          <div className="mt-10 mb-4 px-4 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
+            Recent Projects
           </div>
-          <div className="px-4 space-y-2 pb-8">
+          <div className="px-4 space-y-3 pb-8">
             {contracts.slice(0, 5).map(c => (
               <div 
                 key={c.id} 
-                className={`text-xs truncate cursor-pointer transition-colors ${c.id === selectedContractId ? 'text-blue-600 font-bold' : 'text-slate-500 hover:text-blue-600'}`}
+                className={`text-xs truncate cursor-pointer transition-all flex items-center gap-2 group ${c.id === selectedContractId ? 'text-blue-400 font-bold' : 'text-slate-400 hover:text-blue-300'}`}
                 onClick={() => {
                   if (c.analysis) {
                     setSelectedAnalysis(c.analysis);
@@ -170,197 +164,226 @@ export function DashboardContent() {
                   }
                 }}
               >
-                • {c.name}
+                <div className={`w-1.5 h-1.5 rounded-full ${c.id === selectedContractId ? 'bg-blue-400' : 'bg-slate-700 group-hover:bg-blue-300'}`} />
+                {c.name}
               </div>
             ))}
-            {contracts.length === 0 && <div className="text-xs text-slate-400 italic">No uploads yet</div>}
           </div>
         </div>
         
-        <div className="p-4 border-t border-slate-100 bg-white sticky bottom-0">
-          <div className="bg-slate-900 rounded-xl p-4 text-white">
-            <p className="text-xs font-medium text-slate-400 mb-1 text-slate-100">Current Plan</p>
-            <p className="text-sm font-bold mb-3">Pro Version</p>
-            <Button size="sm" className="w-full bg-white text-slate-900 hover:bg-slate-100">
-              Upgrade
+        <div className="p-6 border-t border-white/5 bg-slate-900/30">
+          <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-5 text-white shadow-xl shadow-blue-500/10 border border-white/10">
+            <p className="text-[10px] font-black uppercase tracking-widest opacity-70 mb-1">Pro Account</p>
+            <p className="text-sm font-black mb-4 tracking-tight">Enterprise Access</p>
+            <Button size="sm" className="w-full bg-white text-blue-600 hover:bg-slate-100 rounded-xl font-bold shadow-lg border-none">
+              Manage
             </Button>
           </div>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto p-8 lg:p-12">
         <div className="max-w-7xl mx-auto">
           {selectedAnalysis && selectedContractId ? (
             <div className="animate-in slide-in-from-bottom-4 duration-500">
               <div className="flex items-center justify-between mb-8">
-                <Button variant="outline" size="sm" onClick={() => { setSelectedAnalysis(null); setSelectedContractId(null); }} className="rounded-full">
+                <Button variant="outline" size="sm" onClick={() => { setSelectedAnalysis(null); setSelectedContractId(null); }} className="rounded-xl border-white/10 bg-slate-900/50 hover:bg-white/5 text-slate-300">
                   ← Back to Dashboard
                 </Button>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="rounded-full">Download PDF</Button>
-                  <Button size="sm" className="rounded-full">Export Report</Button>
+                   {/* Export logic is in ContractAnalysis now */}
                 </div>
               </div>
 
-              <div className="grid lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2">
-                   <ContractAnalysis data={selectedAnalysis} />
-                </div>
-                <div className="lg:col-span-1">
-                   <ContractChat contractId={selectedContractId} />
-                </div>
+              <div className="flex flex-col gap-12">
+                 <ContractAnalysis data={selectedAnalysis} />
+                 <div className="max-w-4xl mx-auto w-full">
+                    <ContractChat contractId={selectedContractId} />
+                 </div>
               </div>
             </div>
           ) : (
             <>
-              <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 text-slate-900">
-                <div>
-                  <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                    Welcome back, {user?.firstName || user?.username}
-                  </h1>
-                  <p className="text-slate-500 mt-1">Here's a summary of your workspace activity.</p>
-                </div>
-                <Button className="rounded-full shadow-lg shadow-blue-500/20 px-6">
-                  <Plus size={18} className="mr-2" /> New Contract
-                </Button>
-              </header>
-
-              {/* Stats Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                <StatCard label="Total Contracts" value={contracts.length.toString()} icon={<FileText className="text-blue-600" />} />
-                <StatCard label="Active Now" value={contracts.filter(c => c.status === 'ACTIVE').length.toString()} icon={<Zap className="text-emerald-600" />} />
-                <StatCard label="Pending Review" value={contracts.filter(c => c.status === 'PENDING' || c.status === 'REVIEW').length.toString()} icon={<Clock className="text-amber-600" />} />
-                <StatCard label="Recent Uploads" value={contracts.length > 0 ? "New" : "0"} icon={<AlertCircle className="text-rose-600" />} />
-              </div>
-
-              <div className="grid lg:grid-cols-3 gap-8 text-slate-900">
-                {/* Main Table */}
-                <Card className="lg:col-span-2 shadow-sm border-slate-200">
-                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+              {view === 'dashboard' && (
+                <>
+                  <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
                     <div>
-                      <CardTitle className="text-xl">My Contracts</CardTitle>
-                      <CardDescription>All your uploaded contracts in one place.</CardDescription>
+                      <h1 className="text-3xl font-black text-white tracking-tight">
+                        Welcome back, <span className="text-blue-500">{user?.firstName || user?.username}</span>
+                      </h1>
+                      <p className="text-slate-400 mt-1 font-medium text-lg">Your legal intelligence overview is ready.</p>
                     </div>
-                    <div className="flex gap-2">
-                      <div className="relative">
-                        <Search size={14} className="absolute left-2.5 top-2.5 text-slate-400" />
-                        <input 
-                          type="text" 
-                          placeholder="Search..." 
-                          className="h-9 w-40 pl-8 pr-3 text-xs border border-slate-200 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
-                          value={searchTerm}
-                          onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="overflow-x-auto">
-                      {loading ? (
-                        <div className="flex items-center justify-center py-12">
-                          <Loader2 className="animate-spin text-blue-600" size={32} />
+                    <Button className="rounded-2xl shadow-xl shadow-blue-500/20 px-8 py-6 bg-blue-600 hover:bg-blue-500 font-bold transition-all hover:scale-105 active:scale-95 border-none">
+                      <Plus size={18} className="mr-2" /> New Analysis
+                    </Button>
+                  </header>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                    <StatCard label="Total Contracts" value={contracts.length.toString()} icon={<FileText className="text-blue-400" />} />
+                    <StatCard label="Active Now" value={contracts.filter(c => c.status === 'ACTIVE').length.toString()} icon={<Zap className="text-emerald-400" />} />
+                    <StatCard label="Pending Review" value={contracts.filter(c => c.status === 'PENDING' || c.status === 'REVIEW').length.toString()} icon={<Clock className="text-amber-400" />} />
+                    <StatCard label="Recent Uploads" value={contracts.length > 0 ? "New" : "0"} icon={<AlertCircle className="text-rose-400" />} />
+                  </div>
+
+                  <div className="grid lg:grid-cols-3 gap-8">
+                    <Card className="lg:col-span-2 border-white/5 bg-slate-900/50 backdrop-blur-sm shadow-2xl">
+                      <CardHeader className="flex flex-row items-center justify-between pb-6 border-b border-white/5">
+                        <div>
+                          <CardTitle className="text-xl font-bold text-white">Repository</CardTitle>
+                          <CardDescription className="text-slate-500 font-medium">Manage and track your contract versions.</CardDescription>
                         </div>
-                      ) : (
-                        <table className="w-full text-sm text-left">
-                          <thead>
-                            <tr className="text-slate-400 border-b border-slate-100">
-                              <th className="py-4 font-medium font-bold uppercase text-[10px] tracking-wider">Contract</th>
-                              <th className="py-4 font-medium font-bold uppercase text-[10px] tracking-wider">Status</th>
-                              <th className="py-4 font-medium font-bold uppercase text-[10px] tracking-wider text-right">Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-slate-50">
-                            {filteredContracts.map((contract) => (
-                              <tr key={contract.id} className="group hover:bg-slate-50/50 transition-colors">
-                                <td className="py-4">
-                                  <div className="flex flex-col">
-                                    <span className="font-semibold text-slate-900">{contract.name}</span>
-                                    <span className="text-xs text-slate-500">{new Date(contract.createdAt).toLocaleDateString()}</span>
-                                  </div>
-                                </td>
-                                <td className="py-4">
-                                  <StatusBadge status={contract.status} />
-                                </td>
-                                <td className="py-4 text-right">
-                                  <div className="flex justify-end gap-2">
-                                    {contract.analysis ? (
-                                      <Button 
-                                        size="sm" 
-                                        variant="outline" 
-                                        className="h-8 text-xs bg-blue-50 border-blue-100 text-blue-600 hover:bg-blue-100 rounded-full"
-                                        onClick={() => {
-                                          setSelectedAnalysis(contract.analysis);
-                                          setSelectedContractId(contract.id);
-                                        }}
-                                      >
-                                        View Analysis
-                                      </Button>
-                                    ) : (
-                                      <Button 
-                                        size="sm" 
-                                        className="h-8 text-xs rounded-full" 
-                                        disabled={analyzingId === contract.id}
-                                        onClick={() => handleAnalyze(contract.id)}
-                                      >
-                                        {analyzingId === contract.id ? (
-                                          <>
-                                            <Loader2 className="mr-1 animate-spin" size={12} />
-                                            Analyzing...
-                                          </>
+                        <div className="relative group">
+                          <Search size={14} className="absolute left-3 top-3 text-slate-500 group-focus-within:text-blue-400 transition-colors" />
+                          <input 
+                            type="text" 
+                            placeholder="Search repository..." 
+                            className="h-10 w-48 pl-10 pr-4 text-xs border border-white/5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 bg-slate-950/50 text-white transition-all"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                          />
+                        </div>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <div className="overflow-x-auto">
+                          {loading ? (
+                            <div className="flex items-center justify-center py-20">
+                              <Loader2 className="animate-spin text-blue-500" size={40} />
+                            </div>
+                          ) : (
+                            <table className="w-full text-sm text-left">
+                              <thead>
+                                <tr className="text-slate-500 border-b border-white/5 bg-slate-950/30">
+                                  <th className="px-6 py-4 font-black uppercase text-[10px] tracking-[0.2em]">Contract</th>
+                                  <th className="px-6 py-4 font-black uppercase text-[10px] tracking-[0.2em]">Status</th>
+                                  <th className="px-6 py-4 font-black uppercase text-[10px] tracking-[0.2em] text-right">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-white/5">
+                                {filteredContracts.map((contract) => (
+                                  <tr key={contract.id} className="group hover:bg-white/[0.02] transition-colors">
+                                    <td className="px-6 py-5">
+                                      <div className="flex flex-col">
+                                        <span className="font-bold text-slate-200 group-hover:text-white transition-colors">{contract.name}</span>
+                                        <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">{new Date(contract.createdAt).toLocaleDateString()}</span>
+                                      </div>
+                                    </td>
+                                    <td className="px-6 py-5">
+                                      <StatusBadge status={contract.status} />
+                                    </td>
+                                    <td className="px-6 py-5 text-right">
+                                      <div className="flex justify-end gap-3 opacity-60 group-hover:opacity-100 transition-opacity">
+                                        {contract.analysis ? (
+                                          <Button 
+                                            size="sm" 
+                                            variant="outline" 
+                                            className="h-9 px-4 text-xs bg-blue-500/10 border-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white rounded-xl transition-all font-bold"
+                                            onClick={() => {
+                                              setSelectedAnalysis(contract.analysis);
+                                              setSelectedContractId(contract.id);
+                                            }}
+                                          >
+                                            Review Analysis
+                                          </Button>
                                         ) : (
-                                          <>
-                                            <Zap size={12} className="mr-1" />
+                                          <Button 
+                                            size="sm" 
+                                            className="h-9 px-4 text-xs rounded-xl bg-slate-800 hover:bg-blue-600 text-white transition-all font-bold shadow-lg border-none" 
+                                            disabled={analyzingId === contract.id}
+                                            onClick={() => handleAnalyze(contract.id)}
+                                          >
+                                            {analyzingId === contract.id ? (
+                                              <Loader2 className="animate-spin" size={14} />
+                                            ) : (
+                                              <Zap size={14} className="mr-2" />
+                                            )}
                                             Analyze
-                                          </>
+                                          </Button>
                                         )}
-                                      </Button>
-                                    )}
-                                    <button 
-                                      onClick={() => handleDelete(contract.id)}
-                                      className="p-2 hover:bg-rose-50 rounded-full text-slate-400 hover:text-rose-600 transition-colors"
-                                    >
-                                      <Trash2 size={16} />
-                                    </button>
-                                  </div>
-                                </td>
-                              </tr>
-                            ))}
-                            {filteredContracts.length === 0 && (
-                              <tr>
-                                <td colSpan={3} className="py-12 text-center text-slate-400 italic font-medium">
-                                  No contracts found. Upload your first contract to get started!
-                                </td>
-                              </tr>
-                            )}
-                          </tbody>
-                        </table>
-                      )}
+                                        <button 
+                                          onClick={() => handleDelete(contract.id)}
+                                          className="p-2 hover:bg-rose-500/20 rounded-xl text-slate-500 hover:text-rose-500 transition-all"
+                                        >
+                                          <Trash2 size={16} />
+                                        </button>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <div className="space-y-8">
+                      <FileUpload onSuccess={fetchContracts} />
+
+                      <Card className="border-white/5 bg-slate-900/50 backdrop-blur-sm shadow-xl overflow-hidden">
+                        <CardHeader>
+                          <CardTitle className="text-lg font-bold text-white">System Health</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="p-4 rounded-2xl bg-slate-950/50 border border-white/5">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-[10px] font-black text-slate-500 uppercase">Vault Storage</span>
+                              <span className="text-xs font-bold text-white">{(contracts.length * 2.4).toFixed(1)} / 500 MB</span>
+                            </div>
+                            <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                              <div className="h-full bg-blue-500 rounded-full" style={{ width: `${(contracts.length * 2.4 / 500) * 100}%` }} />
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </>
+              )}
 
-                {/* Side Analytics */}
-                <div className="space-y-8">
-                  <FileUpload onSuccess={fetchContracts} />
-
-                  <Card className="shadow-sm border-slate-200">
-                    <CardHeader>
-                      <CardTitle className="text-lg">Workspace Stats</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-white">
-                        <span className="text-sm text-slate-600 font-medium">Storage Used</span>
-                        <span className="text-sm font-bold text-slate-900">{(contracts.length * 2.4).toFixed(1)} MB</span>
-                      </div>
-                      <div className="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-white">
-                        <span className="text-sm text-slate-600 font-medium">AI Credits</span>
-                        <span className="text-sm font-bold text-slate-900">{contracts.filter(c => c.analysis).length} / 50</span>
-                      </div>
-                    </CardContent>
-                  </Card>
+              {view === 'history' && (
+                <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                  <header className="mb-10">
+                    <h1 className="text-3xl font-black text-white tracking-tight">Analysis <span className="text-blue-500">History</span></h1>
+                    <p className="text-slate-400 mt-1 font-medium text-lg">Detailed log of all AI generated legal assessments.</p>
+                  </header>
+                  <div className="grid gap-4">
+                     {contracts.filter(c => c.analysis).map(c => (
+                       <Card key={c.id} className="border-white/5 bg-slate-900/50 backdrop-blur-sm hover:border-blue-500/30 transition-all group cursor-pointer" onClick={() => { setSelectedAnalysis(c.analysis); setSelectedContractId(c.id); }}>
+                         <CardContent className="p-6 flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                               <div className="p-3 bg-blue-500/10 rounded-2xl text-blue-400">
+                                  <FileText size={24} />
+                               </div>
+                               <div>
+                                  <h4 className="font-bold text-slate-200 group-hover:text-white transition-colors">{c.name}</h4>
+                                  <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">Analyzed on {new Date(c.createdAt).toLocaleDateString()}</p>
+                               </div>
+                            </div>
+                            <div className="flex items-center gap-6">
+                               <div className="text-right">
+                                  <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Risk Level</p>
+                                  <p className={`font-black text-sm ${c.analysis.overall_risk_level === 'CRITICAL' ? 'text-rose-500' : 'text-emerald-500'}`}>{c.analysis.overall_risk_level}</p>
+                               </div>
+                               <ArrowRight size={20} className="text-slate-600 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
+                            </div>
+                         </CardContent>
+                       </Card>
+                     ))}
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {(view === 'analytics' || view === 'settings') && (
+                <div className="py-20 text-center">
+                   <div className="w-20 h-20 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-600">
+                      <Layers size={40} />
+                   </div>
+                   <h2 className="text-2xl font-black text-white">Module Under Construction</h2>
+                   <p className="text-slate-500 mt-2 max-w-md mx-auto">We're building advanced legal data visualizations and enterprise management features. Check back soon!</p>
+                   <Button variant="outline" className="mt-8 rounded-xl border-white/10" onClick={() => setView('dashboard')}>Return to Dashboard</Button>
+                </div>
+              )}
             </>
           )}
         </div>
@@ -374,8 +397,8 @@ function NavItem({ icon, label, active = false, onClick }: { icon: React.ReactNo
     <div 
       onClick={onClick}
       className={`
-        flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer
-        ${active ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}
+        flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all cursor-pointer
+        ${active ? 'bg-blue-600/10 text-blue-400 shadow-sm border border-blue-500/10' : 'text-slate-400 hover:bg-white/5 hover:text-slate-200'}
       `}
     >
       {icon} {label}
@@ -385,21 +408,21 @@ function NavItem({ icon, label, active = false, onClick }: { icon: React.ReactNo
 
 function StatCard({ label, value, change, icon }: { label: string, value: string, change?: string, icon: React.ReactNode }) {
   return (
-    <Card className="border-slate-200 shadow-sm overflow-hidden">
+    <Card className="border-white/5 bg-slate-900/50 backdrop-blur-sm shadow-xl hover:border-white/10 transition-all group">
       <CardContent className="p-6">
         <div className="flex justify-between items-start mb-4">
-          <div className="p-2 rounded-xl bg-slate-50 border border-slate-100">
+          <div className="p-3 rounded-2xl bg-slate-950/50 border border-white/5 group-hover:border-blue-500/20 transition-all">
             {icon}
           </div>
           {change && (
-            <span className={`text-xs font-bold px-2 py-1 rounded-full ${change.startsWith('+') ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
+            <span className={`text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-widest ${change.startsWith('+') ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'}`}>
               {change}
             </span>
           )}
         </div>
         <div>
-          <p className="text-sm font-medium text-slate-500 mb-1">{label}</p>
-          <h3 className="text-2xl font-extrabold text-slate-900">{value}</h3>
+          <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{label}</p>
+          <h3 className="text-3xl font-black text-white tracking-tight">{value}</h3>
         </div>
       </CardContent>
     </Card>
@@ -408,14 +431,14 @@ function StatCard({ label, value, change, icon }: { label: string, value: string
 
 function StatusBadge({ status }: { status: string }) {
   const styles = {
-    ACTIVE: "bg-emerald-50 text-emerald-700 border-emerald-100",
-    PENDING: "bg-amber-50 text-amber-700 border-amber-100",
-    EXPIRED: "bg-rose-50 text-rose-700 border-rose-100",
-    REVIEW: "bg-blue-50 text-blue-700 border-blue-100",
+    ACTIVE: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
+    PENDING: "bg-amber-500/10 text-amber-500 border-amber-500/20",
+    EXPIRED: "bg-rose-500/10 text-rose-500 border-rose-500/20",
+    REVIEW: "bg-blue-500/10 text-blue-500 border-blue-500/20",
   };
   
   return (
-    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${styles[status as keyof typeof styles] || styles.PENDING}`}>
+    <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.1em] border ${styles[status as keyof typeof styles] || styles.PENDING}`}>
       {status}
     </span>
   );
